@@ -7,9 +7,9 @@ Gem::Specification.new do |s|
   s.version     = MIT::LDAP::VERSION
   s.authors     = ["Eduardo Gutierrez"]
   s.email       = ["edd_d@mit.edu"]
-  s.homepage    = ""
-  s.summary     = %q{Wrapper for MIT LDAP server}
-  s.description = %q{Configure Ldaptic to search MIT LDAP server}
+  s.homepage    = "https://github.com/ecbypi/mit-ldap"
+  s.summary     = %q{Ruby interface for querying MIT LDAP server}
+  s.description = %q{Ruby interface for querying MIT LDAP server (only if you're on MITnet)}
 
   s.rubyforge_project = "mit-ldap"
 
