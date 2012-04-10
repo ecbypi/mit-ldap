@@ -13,5 +13,5 @@ gem 'mit-ldap'
 ```ruby
 require 'mit-ldap'
 MIT::LDAP.connect!                          # true
-MIT::LDAP.search(:filter => '(uid=mrhalp)') # any Ldaptic syntax
+MIT::LDAP.search(:filter => '(uid=mrhalp)') # any Ldaptic options/methods
 ```
