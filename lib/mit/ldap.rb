@@ -17,7 +17,11 @@ module MIT
           )
         )
       end
-      return !self.connection.nil?
+      return connected?
+    end
+
+    def self.connected?
+      !self.connection.nil?
     end
   end
 end
