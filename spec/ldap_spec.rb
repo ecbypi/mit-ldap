@@ -41,10 +41,10 @@ module MIT
 
         it "includes Ldaptic::Module" do
           Ldaptic.should_receive(:Module).
-            with(adapter: :ldap_conn,
-                 base: 'dc=mit,dc=edu',
-                 connection: @connection,
-                 host: 'ldap-too.mit.edu'
+            with(:adapter => :ldap_conn,
+                 :base => 'dc=mit,dc=edu',
+                 :connection => @connection,
+                 :host => 'ldap-too.mit.edu'
                 )
           LDAP.connect!
         end

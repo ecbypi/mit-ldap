@@ -10,10 +10,10 @@ module MIT
         self.connection = ::LDAP::Conn.new('ldap-too.mit.edu')
         singleton_class.send(:include,
           Ldaptic::Module(
-            adapter: :ldap_conn,
-            connection: connection,
-            host: 'ldap-too.mit.edu',
-            base: 'dc=mit,dc=edu',
+            :adapter => :ldap_conn,
+            :connection => connection,
+            :host => 'ldap-too.mit.edu',
+            :base => 'dc=mit,dc=edu',
           )
         )
       end
