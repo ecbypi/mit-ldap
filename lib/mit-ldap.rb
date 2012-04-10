@@ -15,9 +15,9 @@ module MIT
     def ip_addresses
       if RbConfig::CONFIG['host_os'] =~ /darwin/
         `ifconfig | awk '/inet / {print $2}'`
-       else
-         `ifconfig | sed -rn 's/.*r:([^ ]+) .*/\1/p'`
-       end
+      else
+        `ifconfig | sed -rn 's/.*r:([^ ]+) .*/\1/p'`
+      end
     end
   end
 end
