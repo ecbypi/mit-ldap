@@ -1,27 +1,40 @@
 module MIT
   module LDAP
 
-    def self.connect!
-      if MIT.on_campus?
-        ldap_connection = ::LDAP::Conn.new('ldap-too.mit.edu')
-        singleton_class.send(:include,
-          Ldaptic::Module(
+    class << self
+      def connect!
+        if MIT.on_campus?
+          include Ldaptic::Module(
             :adapter => :ldap_conn,
-            :connection => ldap_connection,
+            :connection => ::LDAP::Conn.new('ldap-too.mit.edu'),
             :host => 'ldap-too.mit.edu',
             :base => 'dc=mit,dc=edu',
           )
-        )
+        end
+        return connected?
       end
-      return connected?
-    end
 
-    def self.connection
-      respond_to?(:adapter) ? adapter.instance_variable_get(:@connection) : nil
-    end
+      def connected?
+        !connection.nil?
+      end
 
-    def self.connected?
-      !self.connection.nil?
+      def reconnect!
+        if adapter_present? && !connected?
+          adapter.instance_variable_set(:@connection, ::LDAP::Conn.new('ldap-too.mit.edu'))
+        elsif !adapter_present?
+          connect!
+        end
+      end
+
+      private
+
+      def connection
+        adapter.instance_variable_get(:@connection) if adapter_present?
+      end
+
+      def adapter_present?
+        respond_to?(:adapter)
+      end
     end
   end
 end
