@@ -7,17 +7,14 @@ module MIT
   class << self
 
     def on_campus?
-      ip_addresses.split(/\n/).map { |ip| !(ip =~ /^18\./).nil? }.any?
+      ip_addresses.map { |ip| !(ip =~ /^18\./).nil? }.any?
     end
 
     private
 
     def ip_addresses
-      if RbConfig::CONFIG['host_os'] =~ /darwin/
-        `ifconfig | awk '/inet / {print $2}'`
-      else
-        `ifconfig | sed -rn 's/.*r:([^ ]+) .*/\1/p'`
-      end
+      ifconfig = `ifconfig`
+      @ip_addresses ||= ifconfig.split(/\n/).grep(/inet (?:addr:)?((?:\d{1,3}\.){3}\d{1,3})/) { $1 }
     end
   end
 end
