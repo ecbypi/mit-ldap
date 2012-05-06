@@ -27,13 +27,13 @@ module MIT
     end
 
     describe ".reconnect!" do
-      it "reloads connection object if nil" do
+      it "reloads connection object" do
         LDAP.adapter.instance_variable_set(:@connection, nil)
         LDAP.reconnect!
         LDAP.adapter.instance_variable_get(:@connection).should be_a ::LDAP::Conn
       end
 
-      it "calls .connect! if not connected" do
+      it "calls .connect! if not connected already" do
         LDAP.stub(:adapter_present?).and_return(false)
         LDAP.should_receive(:connect!)
         LDAP.reconnect!

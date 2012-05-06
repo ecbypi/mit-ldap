@@ -19,7 +19,7 @@ module MIT
       end
 
       def reconnect!
-        if adapter_present? && !connected?
+        if adapter_present?
           adapter.instance_variable_set(:@connection, ::LDAP::Conn.new('ldap-too.mit.edu'))
         elsif !adapter_present?
           connect!
