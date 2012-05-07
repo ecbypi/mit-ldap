@@ -8,7 +8,7 @@ module MIT
             :adapter => :ldap_conn,
             :connection => ::LDAP::Conn.new('ldap-too.mit.edu'),
             :host => 'ldap-too.mit.edu',
-            :base => 'dc=mit,dc=edu',
+            :base => 'dc=mit,dc=edu'
           )
         end
         return connected?
