@@ -1,6 +1,7 @@
 require 'rbconfig'
 require 'ldap'
 require 'ldaptic'
+require 'cocaine'
 
 module MIT
 
@@ -13,8 +14,12 @@ module MIT
     private
 
     def ip_addresses
-      ifconfig = `ifconfig`
       @ip_addresses ||= ifconfig.split(/\n/).grep(/inet (?:addr:)?((?:\d{1,3}\.){3}\d{1,3})/) { $1 }
+    end
+
+    def ifconfig
+      @ifconfig ||= Cocaine::CommandLine.new('/sbin/ifconfig')
+      @ifconfig.run
     end
   end
 end
