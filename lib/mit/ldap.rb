@@ -20,6 +20,8 @@ module MIT
               connected? || reconnect! ? super : []
             end
           end
+        elsif MIT.on_campus? && adapter_present?
+          reconnect!
         end
 
         connected?

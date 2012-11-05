@@ -40,6 +40,12 @@ module MIT
 
           LDAP.connect!
         end
+
+        it "calls :reconnect! if connected already" do
+          LDAP.should_receive(:reconnect!)
+
+          LDAP.connect!
+        end
       end
     end
 
