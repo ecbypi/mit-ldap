@@ -2,6 +2,10 @@ require 'mit-ldap'
 
 module MIT
   describe LDAP do
+    it "has a logger instance before connecting" do
+      LDAP.logger.should be_instance_of Logger
+    end
+
     describe ".search" do
       it "returns empty array before connecting" do
         MIT::LDAP.search.should eq []
@@ -18,6 +22,8 @@ module MIT
 
       describe "when on campus" do
         before :all do
+          @logger = LDAP.logger
+
           LDAP.connect!
         end
 
@@ -45,6 +51,10 @@ module MIT
           LDAP.should_receive(:reconnect!)
 
           LDAP.connect!
+        end
+
+        it "uses it's own logger as the adapter's" do
+          LDAP.adapter.logger.should eq @logger
         end
       end
     end

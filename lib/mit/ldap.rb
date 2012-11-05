@@ -1,7 +1,17 @@
+require 'logger'
+
 module MIT
   module LDAP
 
     class << self
+      attr_accessor :logger
+
+      def logger
+        @logger ||= Logger.new('mit-ldap.log')
+
+        adapter_present? ? adapter.logger : @logger
+      end
+
       def search(options = {})
         []
       end
@@ -12,7 +22,8 @@ module MIT
             :adapter => :ldap_conn,
             :connection => ::LDAP::Conn.new('ldap-too.mit.edu'),
             :host => 'ldap-too.mit.edu',
-            :base => 'dc=mit,dc=edu'
+            :base => 'dc=mit,dc=edu',
+            :logger => logger
           )
 
           instance_eval do
