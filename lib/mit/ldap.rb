@@ -2,6 +2,10 @@ module MIT
   module LDAP
 
     class << self
+      def search(options = {})
+        []
+      end
+
       def connect!
         if MIT.on_campus?
           include Ldaptic::Module(
@@ -10,8 +14,15 @@ module MIT
             :host => 'ldap-too.mit.edu',
             :base => 'dc=mit,dc=edu'
           )
+
+          instance_eval do
+            def search(options = {})
+              connected? || reconnect! ? super : []
+            end
+          end
         end
-        return connected?
+
+        connected?
       end
 
       def connected?

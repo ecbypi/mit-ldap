@@ -2,8 +2,13 @@ require 'mit-ldap'
 
 module MIT
   describe LDAP do
-    describe ".connect!" do
+    describe ".search" do
+      it "returns empty array before connecting" do
+        MIT::LDAP.search.should eq []
+      end
+    end
 
+    describe ".connect!" do
       describe "when off campus" do
         it "returns false" do
           MIT.stub(:on_campus?).and_return(false)
@@ -22,6 +27,12 @@ module MIT
 
         it "an Ldaptic::Adapter is set" do
           LDAP.adapter.should be_a Ldaptic::Adapters::LDAPConnAdapter
+        end
+
+        it "redefines the search method to check if the connection has expired" do
+          LDAP.adapter.should_receive(:search).and_return([])
+
+          LDAP.search(filter: { uid: 'mrhalp' })
         end
       end
     end
