@@ -22,6 +22,8 @@ module MIT
 
       describe "when on campus" do
         before :all do
+          # kind of gross to pull into an instance variable to use later, but
+          # these tests are so state dependent, it's the best middle ground
           @logger = LDAP.logger
 
           LDAP.connect!
