@@ -6,12 +6,6 @@ module MIT
       LDAP.logger.should be_instance_of Logger
     end
 
-    describe ".search" do
-      it "returns empty array before connecting" do
-        MIT::LDAP.search.should eq []
-      end
-    end
-
     describe ".connect!" do
       describe "when off campus" do
         it "returns false" do
@@ -37,10 +31,11 @@ module MIT
           LDAP.adapter.should be_a Ldaptic::Adapters::LDAPConnAdapter
         end
 
-        it "redefines the search method to check if the connection has expired" do
-          LDAP.adapter.should_receive(:search).and_return([])
+        it "redefines the :search to return empty results if connection is lost" do
+          LDAP.stub(:connected?).and_return(false)
+          LDAP.stub(:reconnect!).and_return(nil)
 
-          LDAP.search(:filter => { :uid => 'mrhalp' })
+          LDAP.search(:filter => { :uid => 'mrhalp' }).should eq []
         end
 
         it "prevents including Ldaptic::Module twice" do

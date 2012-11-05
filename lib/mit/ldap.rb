@@ -10,10 +10,6 @@ module MIT::LDAP
       adapter_present? ? adapter.logger : @logger
     end
 
-    def search(options = {})
-      []
-    end
-
     def connect!
       if MIT.on_campus? && !adapter_present?
         include Ldaptic::Module(
