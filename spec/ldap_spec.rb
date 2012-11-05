@@ -43,7 +43,7 @@ module MIT
           LDAP.search(:filter => { :uid => 'mrhalp' })
         end
 
-        it "prevents being called twice" do
+        it "prevents including Ldaptic::Module twice" do
           LDAP.should_not_receive(:include)
 
           LDAP.connect!
