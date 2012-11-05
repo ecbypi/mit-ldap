@@ -7,7 +7,7 @@ module MIT
       end
 
       def connect!
-        if MIT.on_campus?
+        if MIT.on_campus? && !adapter_present?
           include Ldaptic::Module(
             :adapter => :ldap_conn,
             :connection => ::LDAP::Conn.new('ldap-too.mit.edu'),
