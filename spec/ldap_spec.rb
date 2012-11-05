@@ -38,7 +38,7 @@ module MIT
         it "redefines the search method to check if the connection has expired" do
           LDAP.adapter.should_receive(:search).and_return([])
 
-          LDAP.search(filter: { uid: 'mrhalp' })
+          LDAP.search(:filter => { :uid => 'mrhalp' })
         end
 
         it "prevents being called twice" do
