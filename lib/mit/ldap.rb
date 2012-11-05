@@ -29,7 +29,7 @@ module MIT::LDAP
             connected? || reconnect! ? super : []
           end
         end
-      elsif MIT.on_campus? && adapter_present?
+      elsif MIT.on_campus? && adapter_present? && !connected?
         reconnect!
       end
 
@@ -40,15 +40,11 @@ module MIT::LDAP
       !connection.nil?
     end
 
-    def reconnect!
-      if adapter_present?
-        adapter.instance_variable_set(:@connection, ::LDAP::Conn.new('ldap-too.mit.edu'))
-      elsif !adapter_present?
-        connect!
-      end
-    end
-
     private
+
+    def reconnect!
+      adapter.instance_variable_set(:@connection, ::LDAP::Conn.new('ldap-too.mit.edu'))
+    end
 
     def connection
       adapter.instance_variable_get(:@connection) if adapter_present?

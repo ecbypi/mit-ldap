@@ -47,29 +47,17 @@ module MIT
           LDAP.connect!
         end
 
-        it "calls :reconnect! if connected already" do
-          LDAP.should_receive(:reconnect!)
-
-          LDAP.connect!
-        end
-
         it "uses it's own logger as the adapter's" do
           LDAP.adapter.logger.should eq @logger
         end
-      end
-    end
 
-    describe ".reconnect!" do
-      it "reloads connection object" do
-        LDAP.adapter.instance_variable_set(:@connection, nil)
-        LDAP.reconnect!
-        LDAP.adapter.instance_variable_get(:@connection).should be_a ::LDAP::Conn
-      end
+        it "reloads connection object if previously connected and connection is nil" do
+          LDAP.adapter.instance_variable_set(:@connection, nil)
 
-      it "calls .connect! if not connected already" do
-        LDAP.stub(:adapter_present?).and_return(false)
-        LDAP.should_receive(:connect!)
-        LDAP.reconnect!
+          LDAP.connect!
+
+          LDAP.adapter.instance_variable_get(:@connection).should be_a ::LDAP::Conn
+        end
       end
     end
   end
