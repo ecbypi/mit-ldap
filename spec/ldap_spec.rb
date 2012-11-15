@@ -28,7 +28,7 @@ module MIT
         end
 
         it "an Ldaptic::Adapter is set" do
-          LDAP.adapter.should be_a Ldaptic::Adapters::LDAPConnAdapter
+          LDAP.adapter.should_not be_nil
         end
 
         it "redefines the :search to return empty results if connection is lost" do
