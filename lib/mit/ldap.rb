@@ -1,3 +1,4 @@
+require 'ldaptic'
 require 'logger'
 
 module MIT::LDAP
@@ -13,8 +14,7 @@ module MIT::LDAP
     def connect!
       if MIT.on_campus? && !adapter_present?
         include Ldaptic::Module(
-          :adapter => :ldap_conn,
-          :connection => ::LDAP::Conn.new('ldap-too.mit.edu'),
+          :adapter => :net_ldap,
           :host => 'ldap-too.mit.edu',
           :base => 'dc=mit,dc=edu',
           :logger => logger
@@ -39,7 +39,7 @@ module MIT::LDAP
     private
 
     def reconnect!
-      adapter.instance_variable_set(:@connection, ::LDAP::Conn.new('ldap-too.mit.edu'))
+      adapter.instance_variable_set(:@connection, Net::LDAP.new(host: 'ldap-too.mit.edu'))
     end
 
     def connection

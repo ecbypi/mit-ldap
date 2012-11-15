@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
   s.require_paths = ['lib']
 
   s.add_dependency 'ldaptic', '~> 0.2'
-  s.add_dependency 'ruby-ldap', '~> 0.9'
+  s.add_dependency 'net-ldap', '~> 0.3'
   s.add_dependency 'cocaine', '~> 0.2'
 
   s.add_development_dependency 'rspec', '~> 2.11'

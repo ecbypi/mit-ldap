@@ -1,5 +1,4 @@
 require 'rbconfig'
-require 'ldap'
 require 'ldaptic'
 require 'cocaine'
 
